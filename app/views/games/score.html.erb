@@ -1,5 +1,12 @@
 <h1><%= @guess %> is <%= @answer %> an english word!</h1>
+<h1><%= @guess %> is <%= @griddy %> in the grid!</h1>
+<% if false %>
+<ul style="font-size: 40px">Given letters:
+  <% @grid.each do |letter| %>
+  <li style="display: inline"> <%= letter.join %></li>
+  <% end %>
+<% end %>
+</ul>
+<h1>Your guess <%= @guess %></h1>
 <h1>Your Score: <%= @score %></h1>
-<h2>Your guess: <%= @guess %></h2>
 <h3><%= link_to 'new', new_path %></h3>
-<h3><%= @start %></h3>

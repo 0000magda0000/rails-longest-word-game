@@ -1,5 +1,5 @@
-<ul><% @grid.each do |letter| %>
-<li><%= letter.join %></li>
+<ul style="font-size: 40px"><% @grid.each do |letter| %>
+<li style="display: inline"><%= letter.join %></li>
     <% end %>
 </ul>
 
@@ -9,4 +9,3 @@
   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 </form>
 
-<h1>test</h1>

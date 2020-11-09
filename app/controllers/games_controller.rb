@@ -4,15 +4,14 @@ require 'open-uri'
 
 class GamesController < ApplicationController
   def new
-    @guess = params[:guess]
     @random = random
   end
 
   def score
-    @guess = params[:guess]
-    @is_english = is_english
-    @end = Time.now
-    @counting_score = counting_score
+    @guess = params[:guess].upcase
+    is_english
+    guess_is_grid
+    counting_score
   end
 
   def random
@@ -21,17 +20,20 @@ class GamesController < ApplicationController
     9.times do
       @grid << characters.shuffle.take(1)
     end
-    @grid
+    @grid.flatten
   end
 
-  def counting_score
-    @score = 0
-    @start = Time.now
-    @start
+  def guess_is_grid
+    @guess = params[:guess].upcase
+    @grid = random
+    if @guess.chars.all? { |letter| @grid.include? letter }
+        @griddy = ""
+    else @griddy = "not"
+    end
   end
 
   def is_english
-    @guess = params[:guess]
+    @guess = params[:guess].upcase
     @url = "https://wagon-dictionary.herokuapp.com/#{@guess}"
     word_hash = open(@url).read
     word_parsed = JSON.parse(word_hash)
@@ -39,6 +41,14 @@ class GamesController < ApplicationController
        @answer = ""
     else
        @answer = "not"
+    end
+  end
+
+  def counting_score
+    if is_english == "not" || guess_is_grid == "not"
+      @score = 0
+    else
+      @score = params[:guess].chars.count
     end
   end
 end
